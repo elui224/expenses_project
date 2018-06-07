@@ -64,8 +64,8 @@ def read_data(master_file): #This function reads the data from the master_file.
 
 		for item in r:
 			try:
-				categories[item["category"]] += float(item["cost"])
 				tot_expense += float(item["cost"])
+				categories[item["category"]] += float(item["cost"])				
 			except:
 				print('There are non-number values in the cost column in ' + '\n' + master_file)
 
@@ -74,4 +74,5 @@ def read_data(master_file): #This function reads the data from the master_file.
 		print('The total spending per category is:')
 		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in categories.items()))
 
-main() #Runs the program.
+if __name__ == "__main__":
+	main() #Runs the program.
