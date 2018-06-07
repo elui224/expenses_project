@@ -11,7 +11,8 @@ Note: the path directory, master_file, must be set before the program is run.
 '''
 
 def main():
-	master_file = '/Users/ericlui/Documents/Dev/expense_project/expenses.csv' #must change this to the appropriate directory.
+	cwd = os.path.dirname(os.path.realpath(__file__)) #gets directory of the expenses.py. Put in function?
+	master_file = cwd + '/expenses.csv' #must change this to the appropriate directory.
 	file_exists = os.path.isfile(master_file)
 	data = collect() #runs the collect function and stores a list in a variable.
 	if not file_exists: #creates csv file if it does not already exist.
@@ -59,18 +60,25 @@ def add_data(master_file, data, file_exists): #This function adds data to the ma
 def read_data(master_file): #This function reads the data from the master_file.
 	with open(master_file, 'rU') as fr:
 		r = csv.DictReader(fr)
+		year_exp = defaultdict(float)
+		month_exp = defaultdict(float)
 		categories = defaultdict(float)
 		tot_expense = 0
 
 		for item in r:
 			try:
-				tot_expense += float(item["cost"])
-				categories[item["category"]] += float(item["cost"])				
+				year_exp[item["year"]] += float(item["cost"])
+				month_exp[item["month"]] += float(item["cost"])	
+				categories[item["category"]] += float(item["cost"])							
 			except:
 				print('There are non-number values in the cost column in ' + '\n' + master_file)
 
-		print('The total spending is:')
-		print("${:,.2f}".format(tot_expense))
+		print('The total spending by year is:')
+		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in year_exp.items()))
+
+		print('The total spending by month is:')
+		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in month_exp.items()))
+
 		print('The total spending per category is:')
 		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in categories.items()))
 
