@@ -68,19 +68,22 @@ def read_data(master_file): #This function reads the data from the master_file.
 		for item in r:
 			try:
 				year_exp[item["year"]] += float(item["cost"])
-				month_exp[item["month"]] += float(item["cost"])	
+				month_exp[item["month"] + ' ' + item["year"]] += float(item["cost"]) #Create a dictionary including a key for month and year.	
 				categories[item["category"]] += float(item["cost"])							
 			except:
 				print('There are non-number values in the cost column in ' + '\n' + master_file)
 
 		print('The total spending by year is:')
 		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in year_exp.items()))
+		print('')
 
 		print('The total spending by month is:')
 		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in month_exp.items()))
+		print('')
 
 		print('The total spending per category is:')
 		print("\n".join("{}: ${:,.2f}".format(k, v) for k, v in categories.items()))
-
+		print('')
+		
 if __name__ == "__main__":
 	main() #Runs the program.
