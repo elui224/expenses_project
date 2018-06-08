@@ -12,7 +12,8 @@ Note: the path directory, master_file, must be set before the program is run.
 
 def main():
 	cwd = os.path.dirname(os.path.realpath(__file__)) #gets directory of the expenses.py. Put in function?
-	master_file = cwd + '/expenses.csv' #must change this to the appropriate directory.
+	file_name = 'expenses.csv' #The name of the csv file that holds all the data.
+	master_file = cwd + '/' + file_name
 	file_exists = os.path.isfile(master_file)
 	data = collect() #runs the collect function and stores a list in a variable.
 	if not file_exists: #creates csv file if it does not already exist.
